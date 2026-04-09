@@ -7,6 +7,8 @@ interface PlayerState {
   progress: number;
   volume: number;
   queue: Song[];
+  shuffle: boolean;
+  repeat: boolean;
 }
 
 interface PlayerContextType extends PlayerState {
@@ -16,6 +18,9 @@ interface PlayerContextType extends PlayerState {
   prevSong: () => void;
   setProgress: (val: number) => void;
   setVolume: (val: number) => void;
+  toggleShuffle: () => void;
+  toggleRepeat: () => void;
+  setQueue: (songs: Song[]) => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | null>(null);
@@ -33,6 +38,8 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     progress: 35,
     volume: 70,
     queue: songs,
+    shuffle: false,
+    repeat: false,
   });
 
   const playSong = useCallback((song: Song) => {
@@ -46,8 +53,13 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   const nextSong = useCallback(() => {
     setState((s) => {
       const idx = s.queue.findIndex((q) => q.id === s.currentSong?.id);
-      const next = s.queue[(idx + 1) % s.queue.length];
-      return { ...s, currentSong: next, progress: 0, isPlaying: true };
+      let nextIdx: number;
+      if (s.shuffle) {
+        nextIdx = Math.floor(Math.random() * s.queue.length);
+      } else {
+        nextIdx = (idx + 1) % s.queue.length;
+      }
+      return { ...s, currentSong: s.queue[nextIdx], progress: 0, isPlaying: true };
     });
   }, []);
 
@@ -67,8 +79,22 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     setState((s) => ({ ...s, volume: val }));
   }, []);
 
+  const toggleShuffle = useCallback(() => {
+    setState((s) => ({ ...s, shuffle: !s.shuffle }));
+  }, []);
+
+  const toggleRepeat = useCallback(() => {
+    setState((s) => ({ ...s, repeat: !s.repeat }));
+  }, []);
+
+  const setQueue = useCallback((newQueue: Song[]) => {
+    setState((s) => ({ ...s, queue: newQueue }));
+  }, []);
+
   return (
-    <PlayerContext.Provider value={{ ...state, playSong, togglePlay, nextSong, prevSong, setProgress, setVolume }}>
+    <PlayerContext.Provider
+      value={{ ...state, playSong, togglePlay, nextSong, prevSong, setProgress, setVolume, toggleShuffle, toggleRepeat, setQueue }}
+    >
       {children}
     </PlayerContext.Provider>
   );
