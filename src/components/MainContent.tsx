@@ -5,7 +5,9 @@ import SearchView from "./SearchView";
 import LibraryView from "./LibraryView";
 import ArtistProfile from "./ArtistProfile";
 import PlaylistDetail from "./PlaylistDetail";
+import SpotifySection from "./SpotifySection";
 import { songs, artists, newReleases } from "@/data/mockData";
+import { TrendingUp, Flame, Sparkles } from "lucide-react";
 
 interface MainContentProps {
   activeSection: string;
@@ -17,9 +19,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   <section className="mb-8">
     <div className="flex items-center justify-between mb-4">
       <h2 className="text-xl sm:text-2xl font-bold text-foreground">{title}</h2>
-      <button className="text-xs font-semibold text-muted-foreground hover:text-primary uppercase tracking-wider transition-colors">
-        Ver todo
-      </button>
     </div>
     {children}
   </section>
@@ -63,14 +62,26 @@ const MainContent = ({ activeSection, navData, onNavigate }: MainContentProps) =
           <div className="page-enter">
             <HeroBanner />
 
-            <Section title="Recomendados para ti">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {songs.slice(0, 5).map((song, i) => (
-                  <MusicCard key={song.id} song={song} index={i} />
-                ))}
-              </div>
-            </Section>
+            {/* Spotify-powered sections with curated urban playlists */}
+            <SpotifySection
+              title="Trending Urbano"
+              playlistId="37i9dQZF1DX10zKzsJ2jva"
+              icon={<TrendingUp className="w-5 h-5 text-primary" />}
+            />
 
+            <SpotifySection
+              title="Top Argentina"
+              playlistId="37i9dQZEVXbMMy2roB9myp"
+              icon={<Flame className="w-5 h-5 text-primary" />}
+            />
+
+            <SpotifySection
+              title="Nuevos Lanzamientos"
+              playlistId="37i9dQZF1DX4JAvHpjipBk"
+              icon={<Sparkles className="w-5 h-5 text-primary" />}
+            />
+
+            {/* Fallback local content */}
             <Section title="Artistas destacados">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                 {artists.map((artist, i) => (
@@ -80,14 +91,6 @@ const MainContent = ({ activeSection, navData, onNavigate }: MainContentProps) =
                     index={i}
                     onClick={() => onNavigate("artist", { artistId: artist.id })}
                   />
-                ))}
-              </div>
-            </Section>
-
-            <Section title="Nuevos lanzamientos">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {newReleases.map((song, i) => (
-                  <MusicCard key={song.id} song={song} index={i} />
                 ))}
               </div>
             </Section>
