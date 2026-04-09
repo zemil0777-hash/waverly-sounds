@@ -22,8 +22,8 @@ const Index = () => {
   }
 
   return (
-    <PlayerProvider>
-      <PlaylistProvider>
+    <PlaylistProvider>
+      <PlayerProvider>
         <div className="h-screen flex flex-col bg-background">
           <div className="flex flex-1 overflow-hidden">
             <WavelySidebar activeSection={activeSection} onNavigate={handleNavigate} />
@@ -32,8 +32,8 @@ const Index = () => {
           <MobileNav activeSection={activeSection} onNavigate={handleNavigate} />
           <PlayerBar />
         </div>
-      </PlaylistProvider>
-    </PlayerProvider>
+      </PlayerProvider>
+    </PlaylistProvider>
   );
 };
 
