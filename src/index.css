@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,47 +6,49 @@
 
 @layer base {
   :root {
-    --background: 0 0% 6%;
+    --background: 240 14% 5%;
     --foreground: 0 0% 100%;
 
-    --card: 0 0% 10%;
+    --card: 240 12% 10%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 10%;
+    --popover: 240 12% 10%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 145 63% 42%;
+    --primary: 272 72% 46%;
     --primary-foreground: 0 0% 100%;
+    --primary-hover: 272 62% 59%;
 
-    --secondary: 0 0% 14%;
+    --secondary: 240 12% 13%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 64%;
+    --muted: 240 10% 18%;
+    --muted-foreground: 240 5% 60%;
 
-    --accent: 145 63% 42%;
+    --accent: 272 72% 46%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 145 63% 42%;
+    --border: 240 10% 16%;
+    --input: 240 10% 16%;
+    --ring: 272 72% 46%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 7%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 145 63% 42%;
+    --sidebar-background: 240 14% 6%;
+    --sidebar-foreground: 240 5% 75%;
+    --sidebar-primary: 272 72% 46%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent: 240 12% 14%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 14%;
-    --sidebar-ring: 145 63% 42%;
+    --sidebar-border: 240 10% 14%;
+    --sidebar-ring: 272 72% 46%;
 
-    --player-background: 0 0% 8%;
-    --surface-hover: 0 0% 18%;
+    --player-background: 240 14% 6%;
+    --surface-hover: 240 10% 20%;
+    --glass: 240 12% 12%;
   }
 }
 
@@ -67,37 +69,58 @@
   }
 
   .hover-card-glow {
-    @apply transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-lg hover:shadow-primary/10;
+    @apply transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-lg;
+    &:hover {
+      box-shadow: 0 8px 32px hsl(272 72% 46% / 0.15);
+    }
   }
 
   .glass-surface {
-    @apply bg-card/60 backdrop-blur-xl;
+    background: hsl(var(--glass) / 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .glass-card {
+    background: hsl(var(--glass) / 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(272 72% 56%), hsl(272 62% 70%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(0 0% 6%);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(0 0% 24%);
-  border-radius: 4px;
+  background: hsl(240 10% 22%);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(0 0% 32%);
+  background: hsl(240 10% 30%);
 }
 
-/* Range input styling for player */
+/* Range input styling */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   height: 4px;
   border-radius: 2px;
-  background: hsl(0 0% 24%);
+  background: hsl(240 10% 22%);
   outline: none;
+  cursor: pointer;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -112,4 +135,31 @@ input[type="range"]::-webkit-slider-thumb {
 }
 input[type="range"]:hover::-webkit-slider-thumb {
   opacity: 1;
+}
+
+/* Page transitions */
+.page-enter {
+  animation: pageIn 0.35s ease-out forwards;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, hsl(272 72% 46% / 0.1) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
