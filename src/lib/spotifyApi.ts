@@ -1,5 +1,3 @@
-import { supabase } from "@/integrations/supabase/client";
-
 export interface SpotifyTrack {
   id: string;
   name: string;
@@ -34,26 +32,22 @@ export interface SpotifyAlbum {
   album_type: string;
 }
 
-async function callSpotify(params: Record<string, string>) {
-  const { data, error } = await supabase.functions.invoke("spotify", {
-    body: null,
-    headers: {},
-  });
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-  // Use GET with query params
+async function callSpotify(params: Record<string, string>) {
   const queryString = new URLSearchParams(params).toString();
-  const projectId = import.meta.env.VITE_SUPABASE_URL?.replace("https://", "").replace(".supabase.co", "");
-  const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/spotify?${queryString}`;
+  const url = `${SUPABASE_URL}/functions/v1/spotify?${queryString}`;
 
   const res = await fetch(url, {
     headers: {
-      "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      apikey: SUPABASE_KEY,
       "Content-Type": "application/json",
     },
   });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: "Unknown error" }));
+    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
     throw new Error(err.error || `Request failed: ${res.status}`);
   }
 
@@ -76,7 +70,6 @@ export async function getFeaturedReleases() {
   return callSpotify({ action: "featured", market: "AR" });
 }
 
-// Convert Spotify track to our Song format for the player
 export function spotifyTrackToSong(track: SpotifyTrack): import("@/data/mockData").Song {
   const durationSec = Math.floor(track.duration_ms / 1000);
   const mins = Math.floor(durationSec / 60);
@@ -90,37 +83,31 @@ export function spotifyTrackToSong(track: SpotifyTrack): import("@/data/mockData
     duration: `${mins}:${secs.toString().padStart(2, "0")}`,
     durationSeconds: durationSec,
     cover: track.album.images?.[0]?.url || "",
-    youtubeId: "", // Will be resolved via YouTube search
+    youtubeId: "",
   };
 }
 
-// Search YouTube for a song to get playback
+// Search YouTube via Invidious for video playback
 export async function searchYouTube(query: string): Promise<string> {
-  try {
-    // Use YouTube's oEmbed / search suggestion to find a video ID
-    // We'll use the Invidious API (public, no key needed) as fallback
-    const searchQuery = encodeURIComponent(query);
-    const res = await fetch(
-      `https://inv.nadeko.net/api/v1/search?q=${searchQuery}&type=video&sort_by=relevance`,
-      { signal: AbortSignal.timeout(5000) }
-    );
-    if (res.ok) {
-      const results = await res.json();
-      if (results?.[0]?.videoId) return results[0].videoId;
-    }
-  } catch {
-    // Fallback: try another Invidious instance
+  const instances = [
+    "https://inv.nadeko.net",
+    "https://vid.puffyan.us",
+    "https://invidious.fdn.fr",
+  ];
+
+  for (const instance of instances) {
     try {
-      const searchQuery = encodeURIComponent(query);
       const res = await fetch(
-        `https://vid.puffyan.us/api/v1/search?q=${searchQuery}&type=video`,
+        `${instance}/api/v1/search?q=${encodeURIComponent(query)}&type=video`,
         { signal: AbortSignal.timeout(5000) }
       );
       if (res.ok) {
         const results = await res.json();
         if (results?.[0]?.videoId) return results[0].videoId;
       }
-    } catch {}
+    } catch {
+      continue;
+    }
   }
   return "";
 }
