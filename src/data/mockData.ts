@@ -4,7 +4,9 @@ export interface Song {
   artist: string;
   album: string;
   duration: string;
+  durationSeconds: number;
   cover: string;
+  youtubeId: string;
 }
 
 export interface Artist {
@@ -22,23 +24,95 @@ export interface Playlist {
 }
 
 export const songs: Song[] = [
-  { id: "1", title: "Midnight Dreams", artist: "Aurora Wave", album: "Neon Horizons", duration: "3:42", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop" },
-  { id: "2", title: "Electric Soul", artist: "Neon Pulse", album: "Digital Heart", duration: "4:15", cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop" },
-  { id: "3", title: "Starlight Avenue", artist: "Luna Echo", album: "Cosmic Drift", duration: "3:58", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=300&fit=crop" },
-  { id: "4", title: "Ocean Waves", artist: "Deep Current", album: "Blue Depths", duration: "5:02", cover: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop" },
-  { id: "5", title: "City Lights", artist: "Metro Sound", album: "Urban Pulse", duration: "3:33", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop" },
-  { id: "6", title: "Velvet Night", artist: "Shadow Sync", album: "Dark Bloom", duration: "4:28", cover: "https://images.unsplash.com/photo-1504898770365-14faca6a7320?w=300&h=300&fit=crop" },
-  { id: "7", title: "Golden Hour", artist: "Sunrise Kit", album: "Warm Glow", duration: "3:19", cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" },
-  { id: "8", title: "Crystal Rain", artist: "Aurora Wave", album: "Neon Horizons", duration: "4:47", cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=300&h=300&fit=crop" },
+  {
+    id: "1",
+    title: "Blinding Lights",
+    artist: "The Weeknd",
+    album: "After Hours",
+    duration: "3:20",
+    durationSeconds: 200,
+    cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop",
+    youtubeId: "4NRXx6U8ABQ",
+  },
+  {
+    id: "2",
+    title: "Levitating",
+    artist: "Dua Lipa",
+    album: "Future Nostalgia",
+    duration: "3:23",
+    durationSeconds: 203,
+    cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
+    youtubeId: "TUVcZfQe-Kw",
+  },
+  {
+    id: "3",
+    title: "Stay",
+    artist: "The Kid LAROI & Justin Bieber",
+    album: "F*ck Love 3",
+    duration: "2:21",
+    durationSeconds: 141,
+    cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=300&fit=crop",
+    youtubeId: "kTJczUoc26U",
+  },
+  {
+    id: "4",
+    title: "Heat Waves",
+    artist: "Glass Animals",
+    album: "Dreamland",
+    duration: "3:58",
+    durationSeconds: 238,
+    cover: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop",
+    youtubeId: "mRD0-GxDwss",
+  },
+  {
+    id: "5",
+    title: "As It Was",
+    artist: "Harry Styles",
+    album: "Harry's House",
+    duration: "2:47",
+    durationSeconds: 167,
+    cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop",
+    youtubeId: "H5v3kku4y6Q",
+  },
+  {
+    id: "6",
+    title: "Starboy",
+    artist: "The Weeknd",
+    album: "Starboy",
+    duration: "3:50",
+    durationSeconds: 230,
+    cover: "https://images.unsplash.com/photo-1504898770365-14faca6a7320?w=300&h=300&fit=crop",
+    youtubeId: "34Na4j8AVgA",
+  },
+  {
+    id: "7",
+    title: "Peaches",
+    artist: "Justin Bieber",
+    album: "Justice",
+    duration: "3:18",
+    durationSeconds: 198,
+    cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop",
+    youtubeId: "tQ0yjYUFKAE",
+  },
+  {
+    id: "8",
+    title: "Save Your Tears",
+    artist: "The Weeknd",
+    album: "After Hours",
+    duration: "3:35",
+    durationSeconds: 215,
+    cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=300&h=300&fit=crop",
+    youtubeId: "XXYlFuWEuKI",
+  },
 ];
 
 export const artists: Artist[] = [
-  { id: "1", name: "Aurora Wave", image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=300&h=300&fit=crop", genre: "Synthwave" },
-  { id: "2", name: "Neon Pulse", image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop", genre: "Electro" },
-  { id: "3", name: "Luna Echo", image: "https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?w=300&h=300&fit=crop", genre: "Dream Pop" },
-  { id: "4", name: "Deep Current", image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=300&h=300&fit=crop", genre: "Ambient" },
-  { id: "5", name: "Metro Sound", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop", genre: "Indie" },
-  { id: "6", name: "Shadow Sync", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=300&fit=crop", genre: "Dark Wave" },
+  { id: "1", name: "The Weeknd", image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=300&h=300&fit=crop", genre: "R&B / Pop" },
+  { id: "2", name: "Dua Lipa", image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop", genre: "Pop / Dance" },
+  { id: "3", name: "Harry Styles", image: "https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?w=300&h=300&fit=crop", genre: "Pop / Rock" },
+  { id: "4", name: "Glass Animals", image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=300&h=300&fit=crop", genre: "Indie / Alt" },
+  { id: "5", name: "Justin Bieber", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop", genre: "Pop / R&B" },
+  { id: "6", name: "The Kid LAROI", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=300&fit=crop", genre: "Hip Hop / Pop" },
 ];
 
 export const playlists: Playlist[] = [
@@ -50,9 +124,54 @@ export const playlists: Playlist[] = [
 ];
 
 export const newReleases: Song[] = [
-  { id: "n1", title: "Neon Dreams", artist: "Aurora Wave", album: "Neon Horizons II", duration: "3:55", cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=300&h=300&fit=crop" },
-  { id: "n2", title: "Pulse", artist: "Neon Pulse", album: "Frequency", duration: "4:10", cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop" },
-  { id: "n3", title: "Echoes", artist: "Luna Echo", album: "Resonance", duration: "3:48", cover: "https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?w=300&h=300&fit=crop" },
-  { id: "n4", title: "Drift", artist: "Deep Current", album: "Tides", duration: "5:22", cover: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop" },
-  { id: "n5", title: "Signal", artist: "Metro Sound", album: "Broadcast", duration: "3:37", cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop" },
+  {
+    id: "n1",
+    title: "Flowers",
+    artist: "Miley Cyrus",
+    album: "Endless Summer Vacation",
+    duration: "3:20",
+    durationSeconds: 200,
+    cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=300&h=300&fit=crop",
+    youtubeId: "G7KNmW9a75Y",
+  },
+  {
+    id: "n2",
+    title: "Unholy",
+    artist: "Sam Smith & Kim Petras",
+    album: "Gloria",
+    duration: "2:36",
+    durationSeconds: 156,
+    cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
+    youtubeId: "Uq9gPaIzbe8",
+  },
+  {
+    id: "n3",
+    title: "Anti-Hero",
+    artist: "Taylor Swift",
+    album: "Midnights",
+    duration: "3:20",
+    durationSeconds: 200,
+    cover: "https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?w=300&h=300&fit=crop",
+    youtubeId: "b1kbLwvqugk",
+  },
+  {
+    id: "n4",
+    title: "Calm Down",
+    artist: "Rema & Selena Gomez",
+    album: "Rave & Roses",
+    duration: "3:59",
+    durationSeconds: 239,
+    cover: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=300&h=300&fit=crop",
+    youtubeId: "WcIcVapfqXw",
+  },
+  {
+    id: "n5",
+    title: "Vampire",
+    artist: "Olivia Rodrigo",
+    album: "GUTS",
+    duration: "3:39",
+    durationSeconds: 219,
+    cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop",
+    youtubeId: "RlPNh_PBZb4",
+  },
 ];
