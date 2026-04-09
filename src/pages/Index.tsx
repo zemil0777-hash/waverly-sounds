@@ -1,16 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { PlayerProvider } from "@/context/PlayerContext";
+import WavelySidebar from "@/components/WavelySidebar";
+import MainContent from "@/components/MainContent";
+import PlayerBar from "@/components/PlayerBar";
+import MobileNav from "@/components/MobileNav";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [activeSection, setActiveSection] = useState("home");
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <PlayerProvider>
+      <div className="h-screen flex flex-col bg-background">
+        <div className="flex flex-1 overflow-hidden">
+          <WavelySidebar activeSection={activeSection} onNavigate={setActiveSection} />
+          <MainContent />
+        </div>
+        <MobileNav activeSection={activeSection} onNavigate={setActiveSection} />
+        <PlayerBar />
+      </div>
+    </PlayerProvider>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
